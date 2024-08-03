@@ -4,37 +4,49 @@
 # Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
 
-_pyname=aiosignal
-pkgname=python-${_pyname}
+_py="python"
+_pkg=aiosignal
+pkgname="${_py}-${_pkg}"
 pkgver=1.3.1
 pkgrel=6
 pkgdesc='List of registered asynchronous callbacks'
-url='https://github.com/aio-libs/aiosignal'
-arch=('any')
-license=('Apache')
+_http="https://github.com"
+_ns="aio-libs"
+url="${_http}/${_ns}/${_pkg}"
+arch=(
+  'any'
+)
+license=(
+  'Apache'
+)
 depends=(
-  'python'
-  'python-frozenlist'
+  "${_py}"
+  "${_py}-frozenlist"
 )
 makedepends=(
-  'python-build'
-  'python-installer'
-  'python-setuptools'
-  'python-wheel'
+  "${_py}-build"
+  "${_py}-installer"
+  "${_py}-setuptools"
+  "${_py}-wheel"
 )
 checkdepends=(
-  'python-pytest'
-  'python-pytest-cov'
-  'python-pytest-asyncio'
+  "${_py}-pytest"
+  "${_py}-pytest-cov"
+  "${_py}-pytest-asyncio"
 )
-source=(${url}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
+source=(
+  "${url}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz"
+)
 sha512sums=(
-  'c03454d1b855bb3e84d3ce07fb32d08855b42d1ca7723fd67d3b2ef1bc66038a31974fabda7561c90e2beaf4cdd2c28cc0463e43eb5d5c127df0cd187ae3c2e2')
+  'c03454d1b855bb3e84d3ce07fb32d08855b42d1ca7723fd67d3b2ef1bc66038a31974fabda7561c90e2beaf4cdd2c28cc0463e43eb5d5c127df0cd187ae3c2e2'
+)
 b2sums=(
-  '16112f674f20b97406eff16a6a9baca1ef414132ec53a67789e08347f06a462ff653c7a00d6865855f5fe0fd70ba4a2bebe286020fdf1942da41d43f72e67837')
+  '16112f674f20b97406eff16a6a9baca1ef414132ec53a67789e08347f06a462ff653c7a00d6865855f5fe0fd70ba4a2bebe286020fdf1942da41d43f72e67837'
+)
 
 build() {
-  cd "${_pyname}-${pkgver}"
+  cd \
+    "${_pkg}-${pkgver}"
   "${_py}" \
     -m \
       build \
@@ -43,7 +55,7 @@ build() {
 
 check() {
   cd \
-    "${_pyname}-${pkgver}"
+    "${_pkg}-${pkgver}"
   PYTHONPATH="$PWD" \
   pytest \
     -v
@@ -51,7 +63,7 @@ check() {
 
 package() {
   cd \
-    "${_pyname}-${pkgver}"
+    "${_pkg}-${pkgver}"
   "${_py}" \
     -m \
       installer \
