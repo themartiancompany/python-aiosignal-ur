@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0
+#
+# Maintainer: Truocolo <truocolo@aol.com>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
 
 _pyname=aiosignal
@@ -8,29 +12,62 @@ pkgdesc='List of registered asynchronous callbacks'
 url='https://github.com/aio-libs/aiosignal'
 arch=('any')
 license=('Apache')
-depends=('python' 'python-frozenlist')
-makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
-checkdepends=('python-pytest' 'python-pytest-cov' 'python-pytest-asyncio')
+depends=(
+  'python'
+  'python-frozenlist'
+)
+makedepends=(
+  'python-build'
+  'python-installer'
+  'python-setuptools'
+  'python-wheel'
+)
+checkdepends=(
+  'python-pytest'
+  'python-pytest-cov'
+  'python-pytest-asyncio'
+)
 source=(${url}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha512sums=('c03454d1b855bb3e84d3ce07fb32d08855b42d1ca7723fd67d3b2ef1bc66038a31974fabda7561c90e2beaf4cdd2c28cc0463e43eb5d5c127df0cd187ae3c2e2')
-b2sums=('16112f674f20b97406eff16a6a9baca1ef414132ec53a67789e08347f06a462ff653c7a00d6865855f5fe0fd70ba4a2bebe286020fdf1942da41d43f72e67837')
+sha512sums=(
+  'c03454d1b855bb3e84d3ce07fb32d08855b42d1ca7723fd67d3b2ef1bc66038a31974fabda7561c90e2beaf4cdd2c28cc0463e43eb5d5c127df0cd187ae3c2e2')
+b2sums=(
+  '16112f674f20b97406eff16a6a9baca1ef414132ec53a67789e08347f06a462ff653c7a00d6865855f5fe0fd70ba4a2bebe286020fdf1942da41d43f72e67837')
 
 build() {
   cd "${_pyname}-${pkgver}"
-  python -m build --wheel
+  "${_py}" \
+    -m \
+      build \
+    --wheel
 }
 
 check() {
-  cd "${_pyname}-${pkgver}"
+  cd \
+    "${_pyname}-${pkgver}"
   PYTHONPATH="$PWD" \
-  pytest -v
+  pytest \
+    -v
 }
 
 package() {
-  cd "${_pyname}-${pkgver}"
-  python -m installer --destdir="${pkgdir}" dist/*.whl
-  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  install -Dm 644 CHANGES.rst README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
+  cd \
+    "${_pyname}-${pkgver}"
+  "${_py}" \
+    -m \
+      installer \
+    --destdir="${pkgdir}" \
+    dist/*.whl
+  install \
+    -Dm 644 \
+    LICENSE \
+    -t \
+    "${pkgdir}/usr/share/licenses/${pkgname}"
+  install \
+    -Dm 644 \
+    CHANGES.rst \
+    README.rst \
+    -t \
+    "${pkgdir}/usr/share/doc/${pkgname}"
 }
 
 # vim: ts=2 sw=2 et:
